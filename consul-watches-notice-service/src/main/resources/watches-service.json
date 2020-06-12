@@ -1,0 +1,39 @@
+{
+  "datacenter": "dc1",
+  "data_dir": "D:\\Softwear\\consul_1.2.2_windows_amd64",
+  "ui": true,
+  "watches": [{
+    "type": "checks",
+    "handler_type": "http",
+    "state": "critical",
+    "http_handler_config": {
+      "path": "http://localhost:9609/notice/wechat/checks",
+      "method": "POST",
+      "timeout": "30s",
+      "header": {
+        "cluster": ["consul-demo-02"]
+      }
+    }
+  },{
+    "type": "service",##监控触发类型 service不是services
+    "service": "consul-demo-02",##要监控的服务
+    "handler_type": "http",##通知类型
+    "http_handler_config": {
+      "path": "http://localhost:9609/notice/wechat/services", ##通知地址
+      "method": "POST",##请求通知地址请求方式
+      "header": {  ###hander需要传的值  自定义可以鉴权
+        "name": ["consul-demo-02"], ###服务名称
+        "environmental":["誉道线上"],###环境
+        "member":["2"]###实例数量
+      }
+    }
+  },
+    {
+      "type": "nodes",
+      "handler_type": "http",
+      "http_handler_config": {
+        "path": "http://localhost:9609/notice/wechat/nodes",
+        "method": "POST"
+      }
+    }]
+}

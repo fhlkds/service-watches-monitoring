@@ -1,0 +1,40 @@
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+server:
+  port: 9609
+spring:
+  application:
+    name: consul-watches-notice-service
+  cloud:
+    consul:
+      host: 127.0.0.1
+      port: 8500
+      config:
+        enabled: true
+        format: yaml
+        prefix: config
+        default-context: application
+        data-key: data
+        profile-separator: '::'
+      discovery:
+        service-name: consul-watches-notice-service
+        prefer-ip-address: true
+        instance-id: ${spring.application.name}-${spring.cloud.client.ip-address}-${server.port}
+        # 健康检查失败多长时间后，取消注册
+        health-check-critical-timeout: 30s
+###邮箱配置实体类
+email:
+  ##收件人
+  noticeEmail:
+
+  ##发件人邮箱
+  from:
+  ##发件人
+  user:
+  ##发件人授权码
+  authorizationCode:
+  ##发件人邮箱服务器
+  mailHost:
